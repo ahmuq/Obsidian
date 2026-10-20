@@ -14559,14 +14559,28 @@ function Library:CreateWindow(WindowInfo)
     end
 
     if Library.IsMobile then
-        local ToggleButton = Library:AddDraggableButton("Toggle", function()
+        local ToggleButton = Library:AddDraggableButton(" ", function()
             Library:Toggle()
         end, true)
+        
+        -- Custom Logo Modification
+        ToggleButton.Button.Size = UDim2.new(0, 45, 0, 45)
+        local IconImage = Instance.new("ImageLabel")
+        IconImage.BackgroundTransparency = 1
+        IconImage.Size = UDim2.new(1, -10, 1, -10)
+        IconImage.Position = UDim2.new(0.5, 0, 0.5, 0)
+        IconImage.AnchorPoint = Vector2.new(0.5, 0.5)
+        IconImage.Image = "rbxassetid://90547918826947"
+        IconImage.ZIndex = 15
+        IconImage.Parent = ToggleButton.Button
 
         local LockButton = Library:AddDraggableButton("Lock", function(self)
             Library.CantDragForced = not Library.CantDragForced
             self:SetText(Library.CantDragForced and "Unlock" or "Lock")
         end, true)
+        
+        -- Hide lock button as requested
+        LockButton.Button.Visible = false
 
         if WindowInfo.MobileButtonsSide == "Right" then
             ToggleButton.Button.AnchorPoint = Vector2.new(1, 0)
